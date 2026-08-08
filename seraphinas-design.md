@@ -1,0 +1,155 @@
+# Seraphina's Secret — Design Doc
+
+*v1 basis (Matt, 2026-08-08). Supersedes the retired seraphinas_secret_design.md upload. A cozy, flashy, no-fail exploration game for a 4-year-old. Seraphina, a young girl, secretly raises baby dragons — and her dad doesn't know. Basis for ongoing design; everything here is iterable.*
+
+---
+
+## Player & goals
+
+- **Player:** 4 years old named Julia, but the main character she plays in the game will be called Seraphina. Knows all letter names (not sounds yet), plays Stardew Valley with a standard Xbox 360 controller, can hunt-and-peck letters on a keyboard.
+- **Learning goals (in priority order):** interactive engagement first; menu/UI navigation; goal-holding and completion; walking/spatial navigation; occasional ambient reading exposure. Reading is present but deliberately *not* the focus.
+- **What she loves in Stardew (design north stars):** wandering between rooms, chopping trees, scything grass, going to bed, meeting/talking to people.
+
+## Design principles
+
+1. **Everything reacts.** The core loop is walk → press green → something delightful happens. Density of low-stakes interactions, not systems.
+2. **Pointlessly flashy is load-bearing.** Particles, sounds, and celebrations are the reward loop, not decoration. Every tool swing, every quest completion, every door transition gets juice. Dragons are the flash license (glitter trails, sneeze-sparks, rainbow fire).
+3. **No fail states, ever.** No timers, no death, no wrong-answer buzzers. Wrong choices do something mildly funny instead. Autosave everywhere.
+4. **Audio-first UI.** She can't read, so *every* piece of text speaks: menu items read themselves aloud on focus, signs talk, all dialog is voiced. Text is always highlighted while spoken — this pairing is the game's main reading instruction.
+5. **Sounds, not letter names.** Letter names are a done skill; sounds are her frontier. Letters are voiced as sounds with a word: "Sss — Sparky!"
+6. **One interaction grammar.** Select-and-confirm works the same in the shop, the wardrobe, and quest menus. All quests display as *N slots that fill up*.
+
+## Controls (Xbox 360, colors match the physical pad)
+
+| Button | Color | Function |
+|---|---|---|
+| A | Green | "Do stuff" (interact, confirm, swing tool, advance) |
+| B | Red | Exit menu / cancel |
+| X | Blue | Switch tool |
+| Y | Yellow | "Help me" — replays current quest |
+| Stick | — | Walk |
+
+- All on-screen button prompts are **colored dots**, never letters ("press the green button" is literally true on the hardware).
+- **Yellow / Help me:** exact replay of the current quest — same NPC portrait, same audio clip, same icon, plus the slot-progress row. When help plays, the next actionable object sparkles if on screen (this is how chained quests communicate their current step without changing the quest text).
+- Keyboard is not a parallel input mode; it appears as an occasional in-world object (e.g. a "name machine" / typewriter where she hunt-and-pecks letters).
+
+## World
+
+- **Room-based, not open map.** Discrete rooms/zones with doorway transitions (each transition its own little flourish). Matches her love of wandering between rooms; also much cheaper to build and to art-generate.
+- Sketch of zones (iterable): Seraphina's house (bedroom/bed, wardrobe), yard out front (chests, grass, trees, stones), garden (apple tree, flowers, watering), the **secret dragon area** (nests, eggs), plus wherever family members hang out.
+- World regenerates overnight: grass regrows, trees regrow, stones respawn, hidden objects re-roll positions.
+
+## Characters
+
+- **Seraphina** (the player) — a young girl secretly raising baby dragons. Customizable outfits (the coin sink).
+- **Family (entirely made-up, not the real family):** one dad, one big brother, one little sister. They wander room-to-room on a simple schedule, always *visibly doing something* (chopping wood, drawing, stacking blocks) — an NPC's "life" is their animation loop. **At most one NPC on screen at a time** (scheduler could for example assign one family member per room per time-of-day, but randomized each day).
+- **Baby dragons:** small, chaotic, adorable. Each dragon has:
+  - a name starting with a distinct letter, always introduced by sound ("Sss — Sparky!"), with the name on a little sign by its nest (first environmental reading words);
+  - one personality trait that generates its mischief quests (see quests).
+  - Starter roster idea: **Sparky** (starts little fires), **Digby** (buries things — canonically explains tools going missing overnight), a sneezer, a mud-lover, a thief who hoards shiny things.
+
+  Dragons are not the only source of quests.
+
+### The Secret (running joke)
+
+Dad doesn't know about the dragons. Seraphina can talk to Julia occasionally, reminding her of things, and say things like "I need your help making sure Dad never finds this!" sort of thing, Seraphina can have a voice for talking to Julia. Proposed mechanics (open to iteration):
+
+- Dragons **hide automatically** whenever dad enters the room (dive into pots, under beds, behind trees) — the one-NPC-per-screen rule makes this clean. Near-miss comedy: dad wanders in, dragons scatter, dad says "hm, did something sparkle?"
+- Siblings are in on the secret (co-conspirators, source of dragon-related quests and cover stories).
+- Dad occasionally *almost* finds out ("What's this scorch mark?!") — pure flavor, never a fail state.
+- Optional quest flavor: "Dad's coming! Help the dragons hide!" (shoo each dragon to a hiding spot — no timer pressure that can fail, just a fun scramble).
+
+## Tools
+
+- Tools are **found in the world**: lightly hidden, or a sibling/dragon has one ("Digby buried your pickaxe again!").
+- **Tools do not persist over sleep** — re-finding them is content, framed as dragon/sibling mischief.
+- **Guarantee rule:** every morning, any tool required by an active quest is guaranteed to spawn somewhere findable.
+- Held tools always clearly visible in the HUD (icon row, current tool highlighted; blue button cycles).
+- V1 tool set (iterable): **scythe** (grass → confetti/coins), **axe** (trees fall with a big crash), **hammer** (colored stones), **watering can** (waters plants; doubles as the fire-hose for dragon fires; washes muddy dragons).
+
+## Economy
+
+- **Coins: max 3**, displayed as three discrete coin slots (subitizable at a glance; teaches 1–2–3 correspondence; prices shown as coin icons).
+- Every minigame / fetch quest awards **1 coin**. Coins **persist over sleep**.
+- When full, extra coins bounce off with a happy sound — nothing lost that matters.
+- **V1 coin sink: outfits** (Seraphina's wardrobe; costs 1–3 coins). Natural extensions later: dragon accessories (bows, hats), new books.
+
+## Menus (the UI curriculum)
+
+Menus are intrinsically motivated, never administrative. All share select-and-confirm, all items speak on focus:
+
+- **Wardrobe / dress-up** — grid navigation, categories, confirm/cancel; also changes the outfit of the NPC she's talking to.
+- **Shop** — the transaction flow: select → see price in coin icons → confirm → equip.
+- **Chest color picker** — a 4-swatch menu on chests; speaks color names on focus ("green!"). Same grammar as the wardrobe.
+- **Sticker/collection album** — possible later addition: paging + selection practice, endless genAI art sink.
+
+## Sleep & the day cycle
+
+- **Bed = save point, session-ender, and the clock.** Sleep → new day → world regenerates, tools relocate, family reschedules, mail arrives, **eggs hatch**.
+- Day "ends" softly — light dims, fireflies come out, dad yawns — but **nothing is ever forced or interrupted**. She will randomly sleep mid-quest and that must be fine:
+  - Quest state and progress **persist through sleep** (2 of 3 stones broken stays 2 of 3).
+  - The tool-guarantee rule (above) covers waking up mid-quest.
+- Occasionally sleep *is* a quest ("Time for bed!" from dad → coin in the morning).
+- **Bedtime recap** (sneaky reading): a short "Today you…" screen — three icon+word lines, read aloud with words highlighted.
+- Overnight hatches are the biggest reward in the game — the gentlest possible pressure toward the bedtime ritual.
+
+## Quests
+
+**Grammar:** a family member (or a dragon situation) presents a request — voiced aloud, with an icon, in a big speech bubble; thought-bubbles are visible from across the room so wandering has purpose. Progress always renders as *N slots filling up*. Completion = big celebration + 1 coin. Yellow button replays the request verbatim at any time. Quest chains max ~2 steps in v1, communicated by sparkling the current-step object.
+
+**V1 templates (swappable colors/objects make each feel infinite):**
+
+1. **Break N colored things** — "Break 1 yellow, 1 green, 1 blue stone." Color matching + counting + pickaxe.
+2. **Find all N** — "Find all 4 dragon eggs!" Hidden-object search; eggs hide behind choppable trees, in scythable grass, in other rooms (search reuses tool verbs). Found eggs hatch overnight.
+3. **Recolor** — "Change all the chests out front to be green." Menu-based color picker; UI practice inside a quest.
+4. **Fetch (with a grow step)** — "Bring me an apple" → water the apple tree → apple grows → deliver.
+5. **Read a book to your little sister** — the reading flagship. Big two-page book UI: picture on one side, one word / three-word sentence on the other; audio reads with per-word highlighting; green button turns pages; sister reacts with delight; ends in a hug + coin. Books are 4-page genAI-generated sets — endless new content. Also "get big brother"
+6. **Dragon mischief cleanup** — "Sparky got loose, put out the fires he made!" (watering can), "Digby buried your pickaxe — find it!", "Wash the muddy dragon."
+
+**More template ideas (for iteration):**
+
+- **Feed each dragon its favorite food** — match food to dragon by color or first-letter sound ("Mmm — Munchy wants the *m*ango").
+- **Cut the grass by X's window** — scythe verb + landmark navigation.
+- **Deliver the mail** — take a letter to a named family member (learning family names as words); the letter gets read aloud with highlighting on delivery.
+- **Hide the dragons, dad's coming!** — shoo dragons to nests; pure comedy, cannot fail.
+- **Bedtime story for the dragons** — book quest variant at the nests; dragons fall asleep page by page.
+- **Egg-sitting** — keep an egg warm/pet it N times today; hatches overnight.
+- **The name machine** — hunt-and-peck her (or Seraphina's, or a dragon's) name on the in-world keyboard; it appears on a sign, voiced letter-sound by letter-sound.
+
+## Reading integration (summary of where it lives)
+
+Deliberately ambient, never a quiz; wrong picks do something funny:
+
+- Every menu/sign/dialog: text highlighted while spoken (the workhorse).
+- Letters voiced as **sounds** + a word, everywhere.
+- Dragon names on nest signs; family names on doors and mail.
+- The book quests (flagship) and bedtime recap.
+- Occasional "mystery request": bubble shows a first letter + three objects; voiced as "it starts with sss…".
+- The keyboard name machine as a special in-world object.
+
+## Assets
+
+- Heavy use of genAI image generation / stock assets; flashy over consistent.
+- Best genAI sinks: outfits, stickers, book pages (image + word), dragon variants, room decorations.
+- Room-based world keeps backgrounds to a manageable set of discrete scenes.
+- Since animation is hard, can grab stock assets from somewhere where appropriate.
+
+## V1 scope checklist
+
+- Room-based world (~4–6 rooms) with juicy transitions. Some outdoor space, a house and its outdoor area and the dragons hidden in a secret cave and maybe a friend's house nearby (not explorable until v2).
+- Seraphina + dad + big brother + little sister on a one-per-room schedule, each with a visible activity loop
+- 2–3 starter dragons with names, nests + signs, one mischief trait each; hide-from-dad behavior
+- 4 tools with find/respawn rules + morning tool guarantee
+- 3-slot coin HUD + tool row; outfit shop + wardrobe
+- Green/red/blue/yellow button scheme with colored-dot prompts; yellow = exact quest replay + sparkle hint
+- Quest templates 1–6 above with slot-row progress
+- Sleep/day loop: soft day end, persistence rules, bedtime recap, overnight hatching
+- TTS + highlight-on-speak for all text
+
+## Open questions / iterate later
+
+- Mechanics of the Secret (auto-hide details, siblings-in-on-it) — proposed above, not yet decided
+- Whether dragons get a care loop (feeding/petting daily) beyond quests
+- Sticker album as second collection system
+- How many books / outfits at launch; cadence of adding genAI content
+- Whether "mystery request" letter-picks land at her level or wait for v2
