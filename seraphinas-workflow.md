@@ -41,7 +41,7 @@ So prompts stay pure task content, `seraphinas-secret\CLAUDE.md` owns (installed
 3. **Runtime discipline** — estimate before each step; background >~30 s; long runs DETACHED (the reaper kills waited tasks).
 4. **Commit gate** — no commit ≥20 MB tree bytes without Matt's explicit prior confirmation. This is a sanity cutoff, not the test: the test is future usefulness. Labels/human judgments and the generative provenance behind them are the critical record; most else is optional scaffolding.
 
-The controller repo's CLAUDE.md carries the mirror rules: prompts may arrive via `prompts\`; NEVER write anything to the drive folder; the handoff docs here are the single canonical version; an empty drive folder is normal. Handoff docs live flat at the controller root with a `seraphinas-` stem prefix (`seraphinas-state.md`, `seraphinas-design.md`, `seraphinas-workflow.md`), matching the fractal convention (Matt, 2026-08-08).
+The controller repo's CLAUDE.md carries the mirror rules: prompts may arrive via `prompts\`; NEVER write anything to the drive folder; the handoff docs here are the single canonical version; an empty drive folder is normal. Handoff docs live flat at the controller root with a `seraphinas-` stem prefix (`seraphinas-state.md`, `seraphinas-design.md`, `seraphinas-workflow.md`), matching the fractal convention (Matt, 2026-08-08). **The controller repo never writes reports** — distillation results are console lines only; report files are a main-repo concept (Matt, 2026-08-08).
 
 ## Checkpoints (rare — every ~1–3 days of work)
 

@@ -18,6 +18,8 @@
 4. **Audio-first UI.** She can't read, so *every* piece of text speaks: menu items read themselves aloud on focus, signs talk, all dialog is voiced. Text is always highlighted while spoken — this pairing is the game's main reading instruction.
 5. **Sounds, not letter names.** Letter names are a done skill; sounds are her frontier. Letters are voiced as sounds with a word: "Sss — Sparky!"
 6. **One interaction grammar.** Select-and-confirm works the same in the shop, the wardrobe, and quest menus. All quests display as *N slots that fill up*.
+7. **Walkable gaps are ≥2 tiles everywhere** (ratified 2026-08-10). One-tile corridors demand steering precision a 4-year-old doesn't have.
+8. **The player must never fully disappear** (ratified 2026-08-10). Tall sprites fade when she's behind them.
 
 ## Controls (Xbox 360, colors match the physical pad)
 
@@ -35,14 +37,24 @@
 
 ## World
 
-- **Room-based, not open map.** Discrete rooms/zones with doorway transitions (each transition its own little flourish). Matches her love of wandering between rooms; also much cheaper to build and to art-generate.
-- Sketch of zones (iterable): Seraphina's house (bedroom/bed, wardrobe), yard out front (chests, grass, trees, stones), garden (apple tree, flowers, watering), the **secret dragon area** (nests, eggs), plus wherever family members hang out.
+- **Zone-based, not one open map.** Big scrollable zones joined by doorway transitions, each transition its own little flourish; doorways are walk-through, no button. Insides in general are big and scrollable (Matt, 2026-08-08).
+- **Zone "Outside":** one big scrollable farm/town map holding Seraphina's house, Dad's shed, The Secret Cave, Joey's house (a mermaid friend), Scar's house (a robot friend), with **The Mystic Woods** as the far-left wooded region — not too big; special quests occasionally lead there, and a possible future "adventure mode" would live in the forest.
+- **Zone "House":** the largest indoor space — many connected rooms as ONE big scrollable map, no portals between interior rooms.
 - World regenerates overnight: grass regrows, trees regrow, stones respawn, hidden objects re-roll positions.
+
+### World aesthetics guideposts
+
+*(Matt, 2026-08-10, from reference images)*
+
+> **Interiors:** every room is built around one focal arrangement — a counter, a sofa on a rug under a lamp, a bed — with furniture hugging walls and corners, leaving generous open floor she can cross without steering. Detail lives on walls and edges (shelves, windows, jars, pictures); floors stay clear except for a rug anchoring the centerpiece. Floor-material changes (wood → stone) mark what a sub-area is for without adding walls. Interesting but not crowded: clusters of themed props with real negative space between them, and a warm, cohesive palette per room.
+>
+> **Exteriors:** wide, clearly drawn roads (2–4 tiles) connect every landmark, with lamp posts, signs, and flowers lining road edges and building fronts rather than scattered across open ground. Decoration clusters where it means something — flower pots at a door, hedges along a wall, a bench beside the path — and grass stays mostly open between clusters, so buildings read from a distance and walking anywhere is easy. The world should look composed, like someone arranged it — not filled.
 
 ## Characters
 
 - **Seraphina** (the player) — a young girl secretly raising baby dragons. Customizable outfits (the coin sink).
-- **Family (entirely made-up, not the real family):** one dad, one big brother, one little sister. They wander room-to-room on a simple schedule, always *visibly doing something* (chopping wood, drawing, stacking blocks) — an NPC's "life" is their animation loop. **At most one NPC on screen at a time** (scheduler could for example assign one family member per room per time-of-day, but randomized each day).
+- **Family (entirely made-up, not the real family):** one dad, one big brother, one little sister. They wander room-to-room on a simple schedule, always *visibly doing something* (chopping wood, drawing, stacking blocks) — an NPC's "life" is their animation loop.
+- **Neighbors:** **Joey**, a mermaid friend, and **Scar**, a robot friend — each with a house on the Outside map.
 - **Baby dragons:** small, chaotic, adorable. Each dragon has:
   - a name starting with a distinct letter, always introduced by sound ("Sss — Sparky!"), with the name on a little sign by its nest (first environmental reading words);
   - one personality trait that generates its mischief quests (see quests).
@@ -54,7 +66,7 @@
 
 Dad doesn't know about the dragons. Seraphina can talk to Julia occasionally, reminding her of things, and say things like "I need your help making sure Dad never finds this!" sort of thing, Seraphina can have a voice for talking to Julia. Proposed mechanics (open to iteration):
 
-- Dragons **hide automatically** whenever dad enters the room (dive into pots, under beds, behind trees) — the one-NPC-per-screen rule makes this clean. Near-miss comedy: dad wanders in, dragons scatter, dad says "hm, did something sparkle?"
+- Dragons **hide automatically** whenever dad comes near (dive into pots, under beds, behind trees). Near-miss comedy: dad wanders in, dragons scatter, dad says "hm, did something sparkle?"
 - Siblings are in on the secret (co-conspirators, source of dragon-related quests and cover stories).
 - Dad occasionally *almost* finds out ("What's this scorch mark?!") — pure flavor, never a fail state.
 - Optional quest flavor: "Dad's coming! Help the dragons hide!" (shoo each dragon to a hiding spot — no timer pressure that can fail, just a fun scramble).
@@ -73,6 +85,7 @@ Dad doesn't know about the dragons. Seraphina can talk to Julia occasionally, re
 - Every minigame / fetch quest awards **1 coin**. Coins **persist over sleep**.
 - When full, extra coins bounce off with a happy sound — nothing lost that matters.
 - **V1 coin sink: outfits** (Seraphina's wardrobe; costs 1–3 coins). Natural extensions later: dragon accessories (bows, hats), new books.
+- The art pack's paper-doll layers make outfits pure data; the purchased pack's unused layer sheets are the wardrobe inventory.
 
 ## Menus (the UI curriculum)
 
@@ -129,9 +142,9 @@ Deliberately ambient, never a quiz; wrong picks do something funny:
 
 ## Assets
 
-- Heavy use of genAI image generation / stock assets; flashy over consistent.
+- **Primary art is the purchased Cute Fantasy RPG pack** (Kenmi) — side-loaded, never in the repo. Player, tiles, buildings, and props come from it.
+- genAI image generation / custom art remains for what the pack lacks: dragons, eggs/nests, Joey, Scar, book pages, stickers.
 - Best genAI sinks: outfits, stickers, book pages (image + word), dragon variants, room decorations.
-- Room-based world keeps backgrounds to a manageable set of discrete scenes.
 - Since animation is hard, can grab stock assets from somewhere where appropriate.
 
 ## V1 scope checklist
