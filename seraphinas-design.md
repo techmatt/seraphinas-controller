@@ -149,8 +149,8 @@ Deliberately ambient, never a quiz; wrong picks do something funny:
 
 ## V1 scope checklist
 
-- Room-based world (~4–6 rooms) with juicy transitions. Some outdoor space, a house and its outdoor area and the dragons hidden in a secret cave and maybe a friend's house nearby (not explorable until v2).
-- Seraphina + dad + big brother + little sister on a one-per-room schedule, each with a visible activity loop
+- Two-zone scrollable world — big outside farm/town map (five buildings, cave mouth, Mystic Woods region) + multi-room scrollable house interior — with juicy doorway transitions; Secret Cave and friends' house interiors come later.
+- Seraphina + dad + big brother + little sister on a simple wandering schedule, each with a visible activity loop
 - 2–3 starter dragons with names, nests + signs, one mischief trait each; hide-from-dad behavior
 - 4 tools with find/respawn rules + morning tool guarantee
 - 3-slot coin HUD + tool row; outfit shop + wardrobe
