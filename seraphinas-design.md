@@ -18,7 +18,7 @@
 4. **Audio-first UI.** She can't read, so *every* piece of text speaks: menu items read themselves aloud on focus, signs talk, all dialog is voiced. Text is always highlighted while spoken — this pairing is the game's main reading instruction.
 5. **Sounds, not letter names.** Letter names are a done skill; sounds are her frontier. Letters are voiced as sounds with a word: "Sss — Sparky!"
 6. **One interaction grammar.** Select-and-confirm works the same in the shop, the wardrobe, and quest menus. All quests display as *N slots that fill up*.
-7. **Walkable gaps are ≥2 tiles everywhere** (ratified 2026-08-10). One-tile corridors demand steering precision a 4-year-old doesn't have.
+7. **Obstacle density is Stardew-comfortable** (Matt, 2026-08-10, revising the hard "walkable gaps ≥2 tiles everywhere" ratified earlier that day). Occasional 1-tile gaps are fine — Julia navigates Stardew-level obstacles comfortably; prefer props whose collision blocks one tile. Target ~75% of Stardew Valley's obstacle density: err slightly under, never sparse.
 8. **The player must never fully disappear** (ratified 2026-08-10). Tall sprites fade when she's behind them.
 
 ## Controls (Xbox 360, colors match the physical pad)
@@ -37,9 +37,11 @@
 
 ## World
 
-- **Zone-based, not one open map.** Big scrollable zones joined by doorway transitions, each transition its own little flourish; doorways are walk-through, no button. Insides in general are big and scrollable (Matt, 2026-08-08).
-- **Zone "Outside":** one big scrollable farm/town map holding Seraphina's house, Dad's shed, The Secret Cave, Joey's house (a mermaid friend), Scar's house (a robot friend), with **The Mystic Woods** as the far-left wooded region — not too big; special quests occasionally lead there, and a possible future "adventure mode" would live in the forest.
+- **Zone-based, not one open map.** Big scrollable zones joined by doorway transitions, each transition its own little flourish. Insides in general are big and scrollable (Matt, 2026-08-08).
+- **Doors are the Stardew copy** (Matt, 2026-08-10, supersedes "walk-through, no button" of 2026-08-08). Entering a building is an A-press on the door — a standard interactable, with the proximity green dot and the existing flourish. Exiting is an automatic walk-through portal. Automatic entry is reserved for future cellar-type internal transitions.
+- **Zone "Outside":** one big scrollable map, 72×50 tiles, holding Seraphina's house, Dad's shed, The Secret Cave, Joey's house (a mermaid friend), Scar's house (a robot friend), with **The Mystic Woods** as the far-left wooded region — not too big; special quests occasionally lead there, and a possible future "adventure mode" would live in the forest. It reads as "a small village with a garden+farm, not a farm with some sheds" (Matt, 2026-08-10/11): the farm/garden is about a quarter of the map, and the landmarks now also include a village hall (a knockable facade), 3 market stalls, a silo, a market square, and a green. The well sits on Seraphina's street; spawn is beside her front door with the interaction dot showing. All Matt-approved 2026-08-11.
 - **Zone "House":** the largest indoor space — many connected rooms as ONE big scrollable map, no portals between interior rooms.
+- **The map boundary must be clearly obstacle-filled** (Matt, 2026-08-10): visually a wall of stuff, mechanically no walkable route to any map-edge cell (build-gated — see the state doc). North is a mountain cliff with the Secret Cave mouth cut into the face (the Stardew mine pattern). East and south are fence lines with trees behind. West is the Mystic Woods' own density. One soft closed gap of undergrowth at the far west marks the future woods exit — it reads as a path without being walkable.
 - World regenerates overnight: grass regrows, trees regrow, stones respawn, hidden objects re-roll positions.
 
 ### World aesthetics guideposts
@@ -49,6 +51,10 @@
 > **Interiors:** every room is built around one focal arrangement — a counter, a sofa on a rug under a lamp, a bed — with furniture hugging walls and corners, leaving generous open floor she can cross without steering. Detail lives on walls and edges (shelves, windows, jars, pictures); floors stay clear except for a rug anchoring the centerpiece. Floor-material changes (wood → stone) mark what a sub-area is for without adding walls. Interesting but not crowded: clusters of themed props with real negative space between them, and a warm, cohesive palette per room.
 >
 > **Exteriors:** wide, clearly drawn roads (2–4 tiles) connect every landmark, with lamp posts, signs, and flowers lining road edges and building fronts rather than scattered across open ground. Decoration clusters where it means something — flower pots at a door, hedges along a wall, a bench beside the path — and grass stays mostly open between clusters, so buildings read from a distance and walking anywhere is easy. The world should look composed, like someone arranged it — not filled.
+
+**Interiors: ratified against a reference image and now implemented** (Matt, 2026-08-10, replacing the "flat peach" placeholder era). Rooms follow the pack-derived reference: real walls with caps/trim and run edging (seamed end tiles at run ends, doorway jambs, room joins); one floor material per room, with a rug anchoring the focal arrangement; furniture hugging walls. Arrangements are baked in — player furniture rearrangement is not planned. Built and approved 2026-08-11, with some edging still incomplete (a known cleanup item, see the state doc).
+
+**Grass correctness rule** (Matt, 2026-08-10). A tile may sit on or beside the base outdoor grass only if its own background IS that base grass; ornamental tilesets carrying a different baked-in green are out. Transparent-background decoration on base grass is fine. The brown ploughed farmland tiles are explicitly approved — brown reads as a dug bed, not a competing green (Matt, 2026-08-11).
 
 ## Characters
 

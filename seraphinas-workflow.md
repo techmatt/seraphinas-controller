@@ -16,7 +16,7 @@ For consumption by a claude.ai instance joining one of Matt's projects. Concrete
 `C:\Code\seraphinas-drive-sync\` — a Google-Drive-synced local folder ("folders from your computer" sync via Drive for Desktop). It bridges claude.ai and Matt's machine without manual upload/download:
 
 - `prompts\` — **written by claude.ai** through the Google Drive connector (search the folder by name to find its ID; create files with Docs-conversion DISABLED so they land as plain `.md`). Read by CC in both repos when Matt references a prompt by name.
-- `reports\` — **written by CC** (the main repo's CLAUDE.md instructs copying each finished report here). Read by claude.ai through the connector when Matt says a report is in.
+- `reports\` — **written by CC** (the main repo's CLAUDE.md instructs writing each finished report and its appendices here directly). Read by claude.ai through the connector when Matt says a report is in.
 
 Rules: the whole folder is **disposable scratch** — Matt deletes contents freely; nothing durable lives there; an empty or absent folder is normal (recreate subfolders without comment). One writer per subfolder, never bidirectional edits of the same file (Drive conflict copies are silent). The Drive connector cannot overwrite or delete — to correct an already-uploaded prompt, upload a suffixed version (`_v2`) and tell Matt which is canonical.
 
@@ -26,7 +26,7 @@ Rules: the whole folder is **disposable scratch** — Matt deletes contents free
 2. **Discuss** the next task in chat. Options in prose; Matt decides.
 3. **claude.ai writes the prompt**: a self-contained `.md` (CC never sees the handoff docs — restate whatever context the task needs, cite in-repo design docs by path). Deliver as a chat artifact AND into `prompts\`. Scale length to task complexity; trust CC to fill in details. **One prompt in flight at a time — write one, wait for its report, then write the next.** Never edit an in-flight prompt (it may be running); corrections go in a separate paste-able ADDENDUM file.
 4. **Matt hands it to CC** ("run prompts\<name>.md") — this hand-off is Matt's approval step.
-5. **CC executes and reports**: report to `scratch/<prompt-name>_report.md` in the repo, copied to `reports\`. Matt says "report's in."
+5. **CC executes and reports**: report written straight to `reports\` as `<prompt-name>_report.md`. Matt says "report's in."
 6. **claude.ai fetches and audits.** A report is a set of claims, not a summary to accept: check corrections-to-the-prompt (CC deviating with reasons is normal and often right — judge each), check surprising numbers against the record, extract decisions needing Matt. Reply with: what changed, what the prompt got wrong, what's next.
 7. Repeat.
 
@@ -36,8 +36,8 @@ Rules: the whole folder is **disposable scratch** — Matt deletes contents free
 
 So prompts stay pure task content, `seraphinas-secret\CLAUDE.md` owns (installed at repo init, 2026-08-08):
 
-1. **Report contract** — every non-trivial prompt ends with a report at `scratch/<prompt-name>_report.md` (never repo root). ~60 lines SOFT: write once, at most one trim pass, then stop — running over is fine; never iterate to squeeze under. Per line: does it change what claude.ai decides next? Content: outcome + commit per item; every correction to the prompt, one line each; unrequested decisions needing attention; numbers with population + basis; suite in two lines; NOT-done one line each. No process narration, no restating the prompt. Overflow → appendix files (JSON preferred) beside the report, one pointer line each. Trivial tasks: one console line, no file.
-2. **Report delivery** — copy report + appendices to `C:\Code\seraphinas-drive-sync\reports\` (create if absent; best-effort, never fatal; `scratch/` copy canonical).
+1. **Report contract** — every non-trivial prompt ends with a report, written directly and ONLY to `C:\Code\seraphinas-drive-sync\reports\` (create if absent). No `scratch/` copy; falling back to `scratch/` with a note is for the case where the drive folder is unwritable (Matt, 2026-08-10; CLAUDE.md updated in `d195453`). Appendix files go to the same place. ~60 lines SOFT: write once, at most one trim pass, then stop — running over is fine; never iterate to squeeze under. Per line: does it change what claude.ai decides next? Content: outcome + commit per item; every correction to the prompt, one line each; unrequested decisions needing attention; numbers with population + basis; suite in two lines; NOT-done one line each. No process narration, no restating the prompt. Overflow → appendix files (JSON preferred), one pointer line each. Trivial tasks: one console line, no file.
+2. **Screenshot rule** (Matt, 2026-08-10; CLAUDE.md `5966212`) — evidence screenshots are report appendices on the drive, 1–2 per claim, never committed. The screenshot-tour output dir (`tests/screenshots/`) is gitignored; its 39 PNGs were untracked via `git rm --cached`, history untouched. An image may be committed only where a test reads it back.
 3. **Runtime discipline** — estimate before each step; background >~30 s; long runs DETACHED (the reaper kills waited tasks).
 4. **Commit gate** — no commit ≥20 MB tree bytes without Matt's explicit prior confirmation. This is a sanity cutoff, not the test: the test is future usefulness. Labels/human judgments and the generative provenance behind them are the critical record; most else is optional scaffolding.
 
