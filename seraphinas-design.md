@@ -155,7 +155,7 @@ Deliberately ambient, never a quiz; wrong picks do something funny:
 
 ## V1 scope checklist
 
-- Two-zone scrollable world — big outside farm/town map (five buildings, cave mouth, Mystic Woods region) + multi-room scrollable house interior — with juicy doorway transitions; Secret Cave and friends' house interiors come later.
+- Two-zone scrollable world — big outside village map (Seraphina's house, Dad's shed, Joey's house, Scar's house, village hall, 3 market stalls, silo, market square, green, cave mouth, garden/farm, Mystic Woods region) + multi-room scrollable house interior — with juicy doorway transitions; Secret Cave and friends' house interiors come later.
 - Seraphina + dad + big brother + little sister on a simple wandering schedule, each with a visible activity loop
 - 2–3 starter dragons with names, nests + signs, one mischief trait each; hide-from-dad behavior
 - 4 tools with find/respawn rules + morning tool guarantee
