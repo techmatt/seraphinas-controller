@@ -16,7 +16,7 @@
 2. **Pointlessly flashy is load-bearing.** Particles, sounds, and celebrations are the reward loop, not decoration. Every tool swing, every quest completion, every door transition gets juice. Dragons are the flash license (glitter trails, sneeze-sparks, rainbow fire).
 3. **No fail states, ever.** No timers, no death, no wrong-answer buzzers. Wrong choices do something mildly funny instead. Autosave everywhere.
 4. **Audio-first UI.** She can't read, so *every* piece of text speaks: menu items read themselves aloud on focus, signs talk, all dialog is voiced. Text is always highlighted while spoken — this pairing is the game's main reading instruction.
-5. **Sounds, not letter names.** Letter names are a done skill; sounds are her frontier. Letters are voiced as sounds with a word: "Sss — Sparky!"
+5. **Sounds, not letter names.** Letter names are a done skill; sounds are her frontier. Letters are voiced as sounds with a word: "Sss — Sparky!" **Deferred in practice:** letter-sound name intros ("Mmm — malachite!") are DROPPED until the voice can actually do them, i.e. ElevenLabs — the proxy TTS reads a sustained consonant as the letter's name (Matt, 2026-08-11). The principle stands; the delivery waits.
 6. **One interaction grammar.** Select-and-confirm works the same in the shop, the wardrobe, and quest menus. All quests display as *N slots that fill up*.
 7. **Obstacle density is Stardew-comfortable** (Matt, 2026-08-10, revising the hard "walkable gaps ≥2 tiles everywhere" ratified earlier that day). Occasional 1-tile gaps are fine — Julia navigates Stardew-level obstacles comfortably; prefer props whose collision blocks one tile. Target ~75% of Stardew Valley's obstacle density: err slightly under, never sparse.
 8. **The player must never fully disappear** (ratified 2026-08-10). Tall sprites fade when she's behind them.
@@ -32,7 +32,7 @@
 | Stick | — | Walk |
 
 - All on-screen button prompts are **colored dots**, never letters ("press the green button" is literally true on the hardware).
-- **Yellow / Help me:** exact replay of the current quest — same NPC portrait, same audio clip, same icon, plus the slot-progress row. When help plays, the next actionable object sparkles if on screen (this is how chained quests communicate their current step without changing the quest text).
+- **Yellow / Help me:** exact replay of the current quest phase — same NPC portrait, same audio clip, same icon, plus the slot-progress row. Objectives sparkle passively whenever they are current, not only while help plays (shipped 2026-08-11).
 - Keyboard is not a parallel input mode; it appears as an occasional in-world object (e.g. a "name machine" / typewriter where she hunt-and-pecks letters).
 
 ## World
@@ -43,6 +43,8 @@
 - **Zone "House":** the largest indoor space — many connected rooms as ONE big scrollable map, no portals between interior rooms.
 - **The map boundary must be clearly obstacle-filled** (Matt, 2026-08-10): visually a wall of stuff, mechanically no walkable route to any map-edge cell (build-gated — see the state doc). North is a mountain cliff with the Secret Cave mouth cut into the face (the Stardew mine pattern). East and south are fence lines with trees behind. West is the Mystic Woods' own density. One soft closed gap of undergrowth at the far west marks the future woods exit — it reads as a path without being walkable.
 - World regenerates overnight: grass regrows, trees regrow, stones respawn, hidden objects re-roll positions.
+- **Choppable trees** (shipped 2026-08-11): three whacks fell a tree, the juice escalating with each hit, leaving a stump; two more whacks clear the stump and **the ground becomes walkable**. Choppability is per-placement, not per-species — a flag on each tree, so the world decides exactly which trees are content. Perimeter and boundary trees are never choppable: they shake and shed leaves forever, and the boundary build gate re-runs with every choppable tree's cells already removed, so **she can never chop her way out of the world.** Chopping opening a path is an affordance to design with, not a side effect — the filed **free-the-bunny** idea (chop the trees penning something in, to let it out) is the first quest meant to use it.
+- **Buildings collide only at their base** (~2-tile bands measured off the art) and join the tall-sprite fade, so she can walk behind a house and still be visible. The **green proximity dot is reserved for quest-style interactables** — doors, props, quest objects — and deliberately does NOT appear on trees or ordinary tool targets; a chop just connects if a tree is in range when the swing starts. The dot's activation radius is due to shrink ~30% (Matt, 2026-08-12).
 
 ### World aesthetics guideposts
 
@@ -59,7 +61,9 @@
 ## Characters
 
 - **Seraphina** (the player) — a young girl secretly raising baby dragons. Customizable outfits (the coin sink).
-- **Family (entirely made-up, not the real family):** one dad, one big brother, one little sister. They wander room-to-room on a simple schedule, always *visibly doing something* (chopping wood, drawing, stacking blocks) — an NPC's "life" is their animation loop.
+- **Family (entirely made-up, not the real family):** one dad and **Hazel**, Seraphina's little sister. They wander room-to-room on a simple schedule, always *visibly doing something* (chopping wood, drawing, stacking blocks) — an NPC's "life" is their animation loop.
+- **Sneak** (Matt, 2026-08-11) — Seraphina's close friend, around her age, who lives next door in one of the neighbor facades (flavor only, not enterable). A sneaky/hiding type of person, kept subtle and never overemphasized; obsessed with his spell book, which is what makes him the first quest giver. **He is NOT a sibling — never a brother.**
+- Sneak and Hazel are paper dolls like Seraphina (the art pack has no child NPC sheets, and no seated or holding poses — so Sneak's book and Hazel's pebble lie at their feet as scenery, an accepted art gap). NPCs are pure data, walk-through with no collision, and turn to face Seraphina when she interacts.
 - **Neighbors:** **Joey**, a mermaid friend, and **Scar**, a robot friend — each with a house on the Outside map.
 - **Baby dragons:** small, chaotic, adorable. Each dragon has:
   - a name starting with a distinct letter, always introduced by sound ("Sss — Sparky!"), with the name on a little sign by its nest (first environmental reading words);
@@ -83,6 +87,8 @@ Dad doesn't know about the dragons. Seraphina can talk to Julia occasionally, re
 - **Tools do not persist over sleep** — re-finding them is content, framed as dragon/sibling mischief.
 - **Guarantee rule:** every morning, any tool required by an active quest is guaranteed to spawn somewhere findable.
 - Held tools always clearly visible in the HUD (icon row, current tool highlighted; blue button cycles).
+- **The belt is 4 slots** (Matt, 2026-08-11), empty slots drawn so the row never reflows. The **axe is permanent in slot 1** and can never be taken away; slots 2–4 hold quest-granted tools, which are revoked when the quest completes. Blue cycles, skipping empties.
+- **Tools talk** (Matt, 2026-08-12): Seraphina barks the tool's name on every switch and an item's name on every pickup — verbose is the point, it is learning material. Swinging the wrong tool at something plays a corrective line naming the RIGHT one ("I need my axe!"). This is the no-fail-state version of a wrong answer: **the wrong tool never damages anything, it just tells her which tool to go and find.**
 - V1 tool set (iterable): **scythe** (grass → confetti/coins), **axe** (trees fall with a big crash), **hammer** (colored stones), **watering can** (waters plants; doubles as the fire-hose for dragon fires; washes muddy dragons).
 
 ## Economy
@@ -114,7 +120,11 @@ Menus are intrinsically motivated, never administrative. All share select-and-co
 
 ## Quests
 
-**Grammar:** a family member (or a dragon situation) presents a request — voiced aloud, with an icon, in a big speech bubble; thought-bubbles are visible from across the room so wandering has purpose. Progress always renders as *N slots filling up*. Completion = big celebration + 1 coin. Yellow button replays the request verbatim at any time. Quest chains max ~2 steps in v1, communicated by sparkling the current-step object.
+**Grammar:** a family member, a friend (or a dragon situation) presents a request — voiced aloud, with an icon, in a big speech bubble; thought-bubbles are visible from across the room so wandering has purpose. Progress always renders as *N slots filling up*. Completion = big celebration + 1 coin.
+
+**Shipped grammar (quest engine v0, 2026-08-11/12).** A quest is multi-phase, not a two-step chain: an ordered list of phases, each carrying its own voiced instruction and its own slot row. Three goal kinds so far — **gather** (a free-order slot row; each item fills its matching slot), **travel** (arriving completes the phase), **ritual** (an ordered sequence of button presses). The offer is a thought-bubble marker visible from a distance; A-press to hear it, and the second A-press IS acceptance — there is no yes/no menu. Yellow replays the *current phase's* line, from anywhere, spoken over Seraphina in the giver's voice; a ritual never claims Yellow, so mid-sequence Yellow answers with the color it is waiting for. Current objectives carry a passive sparkle — no arrows, no minimap. A quest ends on a phase with NO instruction: that absence removes the yellow dot, restores the giver's idle lines, and blocks re-offer. One active quest at a time. Quests, quest items and quest-granted tools all reset at sleep (Matt, 2026-08-11).
+
+**Quest #1 — the faerie summoning, now canon** (Matt, 2026-08-11). Sneak's spell book needs three magic stones. Find the hammer near the well → break a malachite, a ruby and a sapphire rock, two hammer hits each, in any order → meet Sneak at the Secret Cave → the ritual at the campfire spell circle, where he reads red → green → blue from the book one at a time and each correct press sends that gem into the fire (a wrong press fizzles and giggles, and progress never regresses) → the summoning, the biggest celebration in the game so far → three faeries follow her from then on. **The gem colors are the pad's button colors on purpose:** green/red/blue stones teach the controller's color vocabulary, the same vocabulary every dot and menu uses.
 
 **V1 templates (swappable colors/objects make each feel infinite):**
 
@@ -122,7 +132,7 @@ Menus are intrinsically motivated, never administrative. All share select-and-co
 2. **Find all N** — "Find all 4 dragon eggs!" Hidden-object search; eggs hide behind choppable trees, in scythable grass, in other rooms (search reuses tool verbs). Found eggs hatch overnight.
 3. **Recolor** — "Change all the chests out front to be green." Menu-based color picker; UI practice inside a quest.
 4. **Fetch (with a grow step)** — "Bring me an apple" → water the apple tree → apple grows → deliver.
-5. **Read a book to your little sister** — the reading flagship. Big two-page book UI: picture on one side, one word / three-word sentence on the other; audio reads with per-word highlighting; green button turns pages; sister reacts with delight; ends in a hug + coin. Books are 4-page genAI-generated sets — endless new content. Also "get big brother"
+5. **Read a book to your little sister** — the reading flagship. Big two-page book UI: picture on one side, one word / three-word sentence on the other; audio reads with per-word highlighting; green button turns pages; sister reacts with delight; ends in a hug + coin. Books are 4-page genAI-generated sets — endless new content.
 6. **Dragon mischief cleanup** — "Sparky got loose, put out the fires he made!" (watering can), "Digby buried your pickaxe — find it!", "Wash the muddy dragon."
 
 **More template ideas (for iteration):**
@@ -156,7 +166,7 @@ Deliberately ambient, never a quiz; wrong picks do something funny:
 ## V1 scope checklist
 
 - Two-zone scrollable world — big outside village map (Seraphina's house, Dad's shed, Joey's house, Scar's house, village hall, 3 market stalls, silo, market square, green, cave mouth, garden/farm, Mystic Woods region) + multi-room scrollable house interior — with juicy doorway transitions; Secret Cave and friends' house interiors come later.
-- Seraphina + dad + big brother + little sister on a simple wandering schedule, each with a visible activity loop
+- Seraphina + dad + Hazel + Sneak on a simple wandering schedule, each with a visible activity loop (Sneak and Hazel are placed, voiced and talking; schedules and activity loops are not built yet)
 - 2–3 starter dragons with names, nests + signs, one mischief trait each; hide-from-dad behavior
 - 4 tools with find/respawn rules + morning tool guarantee
 - 3-slot coin HUD + tool row; outfit shop + wardrobe
