@@ -37,26 +37,11 @@
 
 ## World
 
-- **Zone-based, not one open map.** Big scrollable zones joined by doorway transitions, each transition its own little flourish. Insides in general are big and scrollable (Matt, 2026-08-08).
+*Zone and region descriptions, layout intent, boundary rules and the aesthetics guideposts moved to **seraphinas-world.md** at checkpoint 6 (2026-08-13). What stays here is how the world answers the player.*
+
 - **Doors are the Stardew copy** (Matt, 2026-08-10, supersedes "walk-through, no button" of 2026-08-08). Entering a building is an A-press on the door — a standard interactable, with the proximity green dot and the existing flourish. Exiting is an automatic walk-through portal. Automatic entry is reserved for future cellar-type internal transitions.
-- **Zone "Outside":** one big scrollable map, 72×50 tiles, holding Seraphina's house, Dad's shed, The Secret Cave, Joey's house (a mermaid friend), Scar's house (a robot friend), with **The Mystic Woods** as the far-left wooded region — not too big; special quests occasionally lead there, and a possible future "adventure mode" would live in the forest. It reads as "a small village with a garden+farm, not a farm with some sheds" (Matt, 2026-08-10/11): the farm/garden is about a quarter of the map, and the landmarks now also include a village hall (a knockable facade), 3 market stalls, a silo, a market square, and a green. The well sits on Seraphina's street; spawn is beside her front door with the interaction dot showing. All Matt-approved 2026-08-11.
-- **Zone "House":** the largest indoor space — many connected rooms as ONE big scrollable map, no portals between interior rooms.
-- **The map boundary must be clearly obstacle-filled** (Matt, 2026-08-10): visually a wall of stuff, mechanically no walkable route to any map-edge cell (build-gated — see the state doc). North is a mountain cliff with the Secret Cave mouth cut into the face (the Stardew mine pattern); the chamber behind it is deliberately one screen, and its **spell circle is a permanent cave landmark, not quest furniture** (Matt, 2026-08-13) — it stays after quest #1 ends, ready for the next ritual. East and south are fence lines with trees behind. West is the Mystic Woods' own density. One soft closed gap of undergrowth at the far west marks the future woods exit — it reads as a path without being walkable.
-- World regenerates overnight: grass regrows, trees regrow, stones respawn, hidden objects re-roll positions.
 - **Choppable trees** (shipped 2026-08-11): three whacks fell a tree, the juice escalating with each hit, leaving a stump; two more whacks clear the stump and **the ground becomes walkable**. Choppability is per-placement, not per-species — a flag on each tree, so the world decides exactly which trees are content. Perimeter and boundary trees are never choppable: they shake and shed leaves forever, and the boundary build gate re-runs with every choppable tree's cells already removed, so **she can never chop her way out of the world.** Chopping opening a path is an affordance to design with, not a side effect — the filed **free-the-bunny** idea (chop the trees penning something in, to let it out) is the first quest meant to use it.
 - **Buildings collide only at their base** (~2-tile bands measured off the art) and join the tall-sprite fade, so she can walk behind a house and still be visible. The **green proximity dot is reserved for quest-style interactables** — doors, props, quest objects — and deliberately does NOT appear on trees or ordinary tool targets; a chop just connects if a tree is in range when the swing starts. The dot's activation radius was trimmed ~30% to **1.5 tiles**, and that one number is also the tool-swing reach — unified, and right on hardware (Matt, 2026-08-12/13).
-
-### World aesthetics guideposts
-
-*(Matt, 2026-08-10, from reference images)*
-
-> **Interiors:** every room is built around one focal arrangement — a counter, a sofa on a rug under a lamp, a bed — with furniture hugging walls and corners, leaving generous open floor she can cross without steering. Detail lives on walls and edges (shelves, windows, jars, pictures); floors stay clear except for a rug anchoring the centerpiece. Floor-material changes (wood → stone) mark what a sub-area is for without adding walls. Interesting but not crowded: clusters of themed props with real negative space between them, and a warm, cohesive palette per room.
->
-> **Exteriors:** wide, clearly drawn roads (2–4 tiles) connect every landmark, with lamp posts, signs, and flowers lining road edges and building fronts rather than scattered across open ground. Decoration clusters where it means something — flower pots at a door, hedges along a wall, a bench beside the path — and grass stays mostly open between clusters, so buildings read from a distance and walking anywhere is easy. The world should look composed, like someone arranged it — not filled.
-
-**Interiors: ratified against a reference image and now implemented** (Matt, 2026-08-10, replacing the "flat peach" placeholder era). Rooms follow the pack-derived reference: real walls with caps/trim and run edging (seamed end tiles at run ends, doorway jambs, room joins); one floor material per room, with a rug anchoring the focal arrangement; furniture hugging walls. Arrangements are baked in — player furniture rearrangement is not planned. Built and approved 2026-08-11, with some edging still incomplete (a known cleanup item, see the state doc).
-
-**Grass correctness rule** (Matt, 2026-08-10). A tile may sit on or beside the base outdoor grass only if its own background IS that base grass; ornamental tilesets carrying a different baked-in green are out. Transparent-background decoration on base grass is fine. The brown ploughed farmland tiles are explicitly approved — brown reads as a dug bed, not a competing green (Matt, 2026-08-11).
 
 ## Characters
 
@@ -98,6 +83,7 @@ Dad doesn't know about the dragons. Seraphina can talk to Julia occasionally, re
 - When full, extra coins bounce off with a happy sound — nothing lost that matters.
 - **V1 coin sink: outfits** (Seraphina's wardrobe; costs 1–3 coins). Natural extensions later: dragon accessories (bows, hats), new books.
 - The art pack's paper-doll layers make outfits pure data; the purchased pack's unused layer sheets are the wardrobe inventory.
+- **Coins v0, shipped** (Matt, 2026-08-13): every quest awards 1 coin at completion; the 3 discrete HUD slots are always visible; overflow bounces happily and nothing is lost; coins persist over sleep but not over a page reload (the store is session-scoped), making them the first thing that separates a night's clearing from a cold start. The spend side stays parked.
 
 ## Menus (the UI curriculum)
 
@@ -124,7 +110,11 @@ Menus are intrinsically motivated, never administrative. All share select-and-co
 
 **Shipped grammar (quest engine v0, 2026-08-11/12).** A quest is multi-phase, not a two-step chain: an ordered list of phases, each carrying its own voiced instruction and its own slot row. Three goal kinds so far — **gather** (a free-order slot row; each item fills its matching slot), **travel** (arriving completes the phase), **ritual** (an ordered sequence of button presses). The offer is a thought-bubble marker visible from a distance; A-press to hear it, and the second A-press IS acceptance — there is no yes/no menu. Yellow replays the *current phase's* line, from anywhere, spoken over Seraphina in the giver's voice; a ritual never claims Yellow, so mid-sequence Yellow answers with the color it is waiting for. Current objectives carry a passive sparkle — no arrows, no minimap. A quest ends on a phase with NO instruction: that absence removes the yellow dot, restores the giver's idle lines, and blocks re-offer. One active quest at a time. Quests, quest items and quest-granted tools all reset at sleep (Matt, 2026-08-11).
 
+**Offer model** (Matt, 2026-08-13). Every quest not completed today shows its giver's thought bubble; ONE active quest is absolute; completing one immediately restores the others' offers; a completed quest stays blocked until sleep. Two-quest days are the shipped shape.
+
 **Quest #1 — the faerie summoning, now canon** (Matt, 2026-08-11). Sneak's spell book needs three magic stones. Find the hammer near the well → break a malachite, a ruby and a sapphire rock, two hammer hits each, in any order → meet Sneak at the Secret Cave → the ritual at the campfire spell circle, where he reads red → green → blue from the book one at a time and each correct press sends that gem into the fire (a wrong press fizzles and giggles, and progress never regresses) → the summoning, the biggest celebration in the game so far → three faeries follow her from then on. **The gem colors are the pad's button colors on purpose:** green/red/blue stones teach the controller's color vocabulary, the same vocabulary every dot and menu uses.
+
+**Quest #2 — the bunny rescue, now canon** (Matt, 2026-08-13). Hazel gives it and relocates to the den for its duration. On accept, a 5×5 hollow ring of 16 tiny choppable trees (2 swings to fell, 2 more for the stump) spawns with a minor always-on shimmer, three bunnies penned inside. Chop any 4 of the ring (the slot row counts falls, log icon) → gather 3 carrots (the gem pattern) → lure the bunnies out **one at a time, enforced**: tagging a second gets a funny refusal, and tagging with no carrot gets a gentle pointer to go find one. A carrot tag turns a bunny into a leash follower; deposit it at the den and Hazel counts each one in. Completion = celebration + coin, Hazel voicing the bunnies' gift, plus a recap predicate of its own. The ring lingers until sleep; everything resets overnight and the quest re-offers. This is the quest the chopping-opens-a-path affordance was reserved for.
 
 **V1 templates (swappable colors/objects make each feel infinite):**
 
@@ -165,7 +155,7 @@ Deliberately ambient, never a quiz; wrong picks do something funny:
 
 ## V1 scope checklist
 
-- Two-zone scrollable world — big outside village map (Seraphina's house, Dad's shed, Joey's house, Scar's house, village hall, 3 market stalls, silo, market square, green, cave mouth, garden/farm, Mystic Woods region) + multi-room scrollable house interior — with juicy doorway transitions; Secret Cave and friends' house interiors come later.
+- Two-zone scrollable world — big outside village map + multi-room scrollable house interior (the landmark set and region intent live in seraphinas-world.md) — with juicy doorway transitions; Secret Cave and friends' house interiors come later.
 - Seraphina + dad + Hazel + Sneak on a simple wandering schedule, each with a visible activity loop (Sneak and Hazel are placed, voiced and talking; schedules and activity loops are not built yet)
 - 2–3 starter dragons with names, nests + signs, one mischief trait each; hide-from-dad behavior
 - 4 tools with find/respawn rules + morning tool guarantee

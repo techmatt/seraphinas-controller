@@ -11,6 +11,17 @@ For consumption by a claude.ai instance joining one of Matt's projects. Concrete
 | **Claude Code ("CC")** | `C:\Code\seraphinas-secret` | The worker. Executes prompts in the main repo, commits to `main`, writes a report per prompt. Has no access to the handoff docs — every prompt must be self-contained. |
 | **controller repo** | `C:\Code\seraphinas-controller` | Holds the **handoff documents — the single canonical copy**. A separate CC instance here runs distillation prompts at checkpoints. Never copied or mirrored anywhere, including the drive folder. |
 
+## The document set (five here, two in the main repo)
+
+Split 3→5 at checkpoint 6 (2026-08-13). The controller docs are claude.ai-facing planning context; engineering detail lives in the main repo and is CC-maintained there.
+
+- `seraphinas-state.md` — status, plan, verification ledger, watch flags, parked, open questions. Rewritten in full every checkpoint; read first at session boot.
+- `seraphinas-design.md` — design canon: premise, principles, controls, characters, quests, reading, economy, menus.
+- `seraphinas-world.md` — zones, layout intent, boundary rules, aesthetics guideposts, measured world facts.
+- `seraphinas-workflow.md` — this doc: the three-part workflow (mostly stable between checkpoints).
+- `seraphinas-systems.md` — a compact machinery index, one line per system, so prompts can be written without the state doc bloating.
+- Main repo: `docs/systems.md` (how the machinery works) and `docs/engineering.md` (facts, constraints, gotchas) — CC-maintained, cited by path in prompts, never mirrored here.
+
 ## The exchange folder (Drive-synced scratch)
 
 `C:\Code\seraphinas-drive-sync\` — a Google-Drive-synced local folder ("folders from your computer" sync via Drive for Desktop). It bridges claude.ai and Matt's machine without manual upload/download:
@@ -30,18 +41,17 @@ Rules: the whole folder is **disposable scratch** — Matt deletes contents free
 6. **claude.ai fetches and audits.** A report is a set of claims, not a summary to accept: check corrections-to-the-prompt (CC deviating with reasons is normal and often right — judge each), check surprising numbers against the record, extract decisions needing Matt. Reply with: what changed, what the prompt got wrong, what's next.
 7. Repeat.
 
+**Reports and screenshots:** claude.ai reads reports as Drive *text* — that is the whole channel, and it is enough for almost everything. Ask for a screenshot only when the prompt names one and numbers genuinely cannot carry the answer.
+
 **Long tasks:** when Matt says "an N-hour run," everything — CC's coding, the run, post-processing — should be DONE by N hours wall-clock (cap the run itself at ~N−2h). Never launch a second full-length run back-to-back without Matt's explicit sign-off. Never mention git push/remote state — Matt handles it.
 
 ## The main repo's CLAUDE.md carries the standing prompt contract
 
-So prompts stay pure task content, `seraphinas-secret\CLAUDE.md` owns (installed at repo init, 2026-08-08):
+So prompts stay pure task content, `seraphinas-secret\CLAUDE.md` owns the standing contract in full (installed at repo init, 2026-08-08): the report contract and its ~60-line soft target, the screenshot rule, runtime discipline, and the commit gate. It is the authority and CC maintains it — read it there rather than restating it in prompts or carrying a copy here.
 
-1. **Report contract** — every non-trivial prompt ends with a report, written directly and ONLY to `C:\Code\seraphinas-drive-sync\reports\` (create if absent). No `scratch/` copy; falling back to `scratch/` with a note is for the case where the drive folder is unwritable (Matt, 2026-08-10; CLAUDE.md updated in `d195453`). Appendix files go to the same place. ~60 lines SOFT: write once, at most one trim pass, then stop — running over is fine; never iterate to squeeze under. Per line: does it change what claude.ai decides next? Content: outcome + commit per item; every correction to the prompt, one line each; unrequested decisions needing attention; numbers with population + basis; suite in two lines; NOT-done one line each. No process narration, no restating the prompt. Overflow → appendix files (JSON preferred), one pointer line each. Trivial tasks: one console line, no file.
-2. **Screenshot rule** (Matt, 2026-08-12; CLAUDE.md `a51b33c`, superseding the 2026-08-10 evidence-screenshot rule of `5966212`) — reports gather **NO evidence screenshots by default**. Matt verifies by playing and pastes whatever is relevant into the chat himself; CC includes a screenshot only when the prompt explicitly asks for one, i.e. when claude.ai will actually use it. Screenshots that are asked for still go to the drive as appendices, never committed. The screenshot-tour output dir (`tests/screenshots/`) is gitignored; an image may be committed only where a test reads it back.
-3. **Runtime discipline** — estimate before each step; background >~30 s; long runs DETACHED (the reaper kills waited tasks).
-4. **Commit gate** — no commit ≥20 MB tree bytes without Matt's explicit prior confirmation. This is a sanity cutoff, not the test: the test is future usefulness. Labels/human judgments and the generative provenance behind them are the critical record; most else is optional scaffolding.
+Era amendment (`7df5785`): **reports emit no appendix files by default** — an appendix exists only when the prompt names one. Data that CC itself will consume later goes in-repo, not to the drive. The report alone is the default.
 
-The controller repo's CLAUDE.md carries the mirror rules: prompts may arrive via `prompts\`; NEVER write anything to the drive folder; the handoff docs here are the single canonical version; an empty drive folder is normal. Handoff docs live flat at the controller root with a `seraphinas-` stem prefix (`seraphinas-state.md`, `seraphinas-design.md`, `seraphinas-workflow.md`), matching the fractal convention (Matt, 2026-08-08). **The controller repo never writes reports** — distillation results are console lines only; report files are a main-repo concept (Matt, 2026-08-08).
+The controller repo's CLAUDE.md carries the mirror rules: prompts may arrive via `prompts\`; NEVER write anything to the drive folder; the handoff docs here are the single canonical version; an empty drive folder is normal. Handoff docs live flat at the controller root with a `seraphinas-` stem prefix (the five listed above), matching the fractal convention (Matt, 2026-08-08). **The controller repo never writes reports** — distillation results are console lines only; report files are a main-repo concept (Matt, 2026-08-08).
 
 ## Checkpoints (rare — every ~1–3 days of work)
 
