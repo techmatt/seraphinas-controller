@@ -51,7 +51,7 @@ The handoff docs are periodically re-distilled: claude.ai prepares a distillatio
 
 - **Prompts are specs; reports are claims.** Self-containment forces explicitness; auditing catches drift. CC's "corrections to the prompt" section is the highest-value part of most reports.
 - **Progress through delivery.** Narrow scope, ship, measure on the real path. Don't build unbiased-evaluation machinery unless asked; Matt corrects what's wrong.
-- **The suite stays lean** (Matt, 2026-08-12). Exhaustive automated testing is a poor fit for a video game Matt plays on hardware, so weaker coverage is an acceptable price for speed: merge assertions into shared page boots, teleport where the walk isn't what's under test, and cut anything Matt's own playing would catch. ~17 tests / ~4 min is the working size. Diets are one pass, not optimization campaigns.
+- **The suite stays lean** (Matt, 2026-08-12). Exhaustive automated testing is a poor fit for a video game Matt plays on hardware, so weaker coverage is an acceptable price for speed: merge assertions into shared page boots, teleport where the walk isn't what's under test, and cut anything Matt's own playing would catch. 18 tests is the working size: the 13-test fast subset runs 3.3 min, `test:all` 6.7 min. Diets are one pass, not optimization campaigns.
 - **Matt's approval gates are structural**: handing a prompt to CC, reading a report before the next prompt, running distillations. Don't design them away.
 - **Decisions get dated and attributed** ("Matt, 2026-08-08") in docs and prompts — provenance is what makes the record auditable later.
 - **Everything eventually distills into a smaller, compact final repo** — store what's needed to reach a good solid algorithm, not everything produced along the way.
