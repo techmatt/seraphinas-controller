@@ -16,7 +16,7 @@ Three zones. Outside and House are generated data: `content/world/**` → `tools
 
 **Outside**: 72×50 tiles (3600), 941 sprites, 1197 solid cells (down from 1360 — buildings went base-only; the +1 over 1196 is campfire logs). Seraphina's house (enterable), Dad's shed, Joey's house, Scar's house, the Secret Cave mouth, plus a village hall, 3 market stalls, a silo, a market square and a green (facades, not enterable; interacting gives a wiggle + burst + two knocks, no text). The Mystic Woods hold the west; a fenced vegetable patch, pond, well and joined dirt roads fill the village. Boundary ring 210/216 solid — the 6 open cells are the named woods gap. Of 256 trees, 46 are choppable; perimeter/boundary trees never are. 29 sprites now carry `glow` (wall torches, campfire, and the exterior lamp posts) and light at dusk.
 
-**House**: 40×29, four rooms on ONE scrolling floor plan, no internal transitions, real walls and measured furniture.
+**House**: 40×29, four rooms on ONE scrolling floor plan, no internal transitions, real walls and measured furniture. The living-room sofa/rug arrangement doubles as the storytime reading nook (measured facts below).
 
 **Secret Cave**: 20×11, exactly one screen, deliberate. Grey cobble walls + the pack's cavern floor, four wall torches, a campfire and the spell circle — which is a permanent landmark, not quest furniture (Matt, 2026-08-13). The cave mouth is a real A-press doorway with a violet light; exit is a walk-through portal. Nothing dragon-shaped exists in it yet.
 
@@ -40,3 +40,5 @@ Three zones. Outside and House are generated data: `content/world/**` → `tools
 - The only road-free 5×5 clearing in the woods is at **(13, 26)** — it is now the bunny pen site.
 - The den is at **(6.5, 16.5)**; the quest's carrots at **(11.5, 21.5)**, **(18.5, 23.5)**, **(13.5, 36.5)**.
 - The malachite stone moved to **(20.5, 35.5)**: it previously coincided with the pen's east edge — the class of collision no gate sees, because runtime quest furniture is invisible to `world:build`.
+- Dad idles at **(57.44, 12.3)** — `BUILDINGS.shed.door.x + 3`, a row above the top road, facing the street: off the doorstep so the shed's green dot never competes, clear of the flower pot by a tile, inside the doorstep apron (2026-08-15).
+- The reading nook (2026-08-15): the red rug spans tiles **26–28 × 6–8**; the sofa blocks (27,6)/(28,6) and the stool (27,8), leaving row 7 the clear strip. During storytime Hazel sits at **(26.5, 7.5)** facing right and the storybook lies at **(28.5, 8.1)** — two tiles apart on purpose, since interact reach is 1.53 tiles and the green dot must never hop from book to Hazel. The fetchable book spawns at **(36.5, 5.5)**, one tile off the bookshelf, same reason.
